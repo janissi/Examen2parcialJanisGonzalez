@@ -69,6 +69,49 @@ fechaHoraCerrado
   });// post
 
 
+  //here put and delete commit
+
+router.put('/asign/:id ', (req, res, next)=>{
+  var query = {"_id":new ObjectID(req.params.id)};
+  var update = {"$set":{"usuarioRegistra":"xyz", "estado":"asignado","fechaHoraAsignado":" " }};
+
+  INCIDENTESCOLL.updateOne(query, update, (err, rslt)=>{
+    if (err) {
+      console.log(err);
+      return res.status(404).json({ "error": "No se pudo modificar " });
+    }
+    
+    return res.status(200).json(rslt);
+  })
+}); // put asing
+
+router.put('/close/:id ', (req, res, next)=>{
+  var query = {"_id":new ObjectID(req.params.id)};
+  var update = {"$set":{"usuarioRegistra":"xyz", "estado":"cerrado","fechaHoraAsignado":" " }};
+
+  INCIDENTESCOLL.updateOne(query, update, (err, rslt)=>{
+    if (err) {
+      console.log(err);
+      return res.status(404).json({ "error": "No se pudo modificar " });
+    }
+    
+    return res.status(200).json(rslt);
+  })
+}); // put close
+
+router.delete('/:id', (req, res, next) => {
+  var query = { "_id": new ObjectID(req.params.id) };
+  INCIDENTESCOLL.removeOne(query, (err, rslt) => {
+    if (err) {
+      console.log(err);
+      return res.status(404).json({ "error": "No se pudo eliminar" });
+    }
+
+    return res.status(200).json(rslt);
+  })
+}); // delete
+
+
   return router;
 }
 
